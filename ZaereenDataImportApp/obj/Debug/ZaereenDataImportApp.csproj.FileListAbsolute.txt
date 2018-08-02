@@ -1,0 +1,7 @@
+D:\Research\ZaereenDataImportApp\ZaereenDataImportApp\bin\Debug\ZaereenDataImportApp.exe.config
+D:\Research\ZaereenDataImportApp\ZaereenDataImportApp\bin\Debug\ZaereenDataImportApp.exe
+D:\Research\ZaereenDataImportApp\ZaereenDataImportApp\bin\Debug\ZaereenDataImportApp.pdb
+D:\Research\ZaereenDataImportApp\ZaereenDataImportApp\obj\Debug\ZaereenDataImportApp.csprojResolveAssemblyReference.cache
+D:\Research\ZaereenDataImportApp\ZaereenDataImportApp\obj\Debug\ZaereenDataImportApp.csproj.CoreCompileInputs.cache
+D:\Research\ZaereenDataImportApp\ZaereenDataImportApp\obj\Debug\ZaereenDataImportApp.exe
+D:\Research\ZaereenDataImportApp\ZaereenDataImportApp\obj\Debug\ZaereenDataImportApp.pdb
