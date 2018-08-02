@@ -51,7 +51,7 @@ namespace HizbeJamali.ZaereenDataImportApp
                         _currentRow["Age"] = dt.Rows[row]["F4"];
                         _currentRow["Location"] = dt.Rows[row]["F5"];
                         _currentRow["Occupation"] = dt.Rows[row]["F6"];
-                        _currentRow["TripExp"] = dt.Rows[row]["F7"];
+                        _currentRow["TripExp"] = (dt.Rows[row]["F7"] != DBNull.Value) ? Convert.ToInt32(dt.Rows[row]["F7"]) : 0;
                         _currentRow["Remarks"] = dt.Rows[row]["F8"];
                         newDt.Rows.Add(_currentRow);
                     }
@@ -80,12 +80,10 @@ namespace HizbeJamali.ZaereenDataImportApp
         {
             using (OleDbConnection connection = new OleDbConnection(string.Format(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};", dbPath)))
             {
-                int count = 1;
                 foreach(DataRow row in dataToInsert.Rows)
                 {
-                    count++;
-                    string insertQuery = string.Format("insert into zaereenledger (Account_No, Zaereen_Name, Age, Ejamaat, Mobile, Occupation, Address, TripExp, Remarks) values ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', {6}, '{7}', '{8}')",
-                        GetLastAccountNumber(dbPath) + count, row["Name"], row["Age"], row["ITS"], row["Mobile"], row["Occupation"], row["Location"], row["TripExp"], row["Remarks"]);
+                    string insertQuery = string.Format("insert into zaereenledger (Account_No, Zaereen_Name, Age, Ejamaat, Mobile, Occupation, Address, TripExp, Remarks) values ({0}, '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', {7}, '{8}')",
+                        (GetLastAccountNumber(dbPath) + 1), row["Name"], row["Age"], row["ITS"], row["Mobile"], row["Occupation"], row["Location"], row["TripExp"], row["Remarks"]);
 
                     OleDbCommand command = new OleDbCommand(insertQuery, connection);
                     command.CommandType = CommandType.Text;
