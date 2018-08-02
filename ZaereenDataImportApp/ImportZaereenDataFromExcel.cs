@@ -62,14 +62,30 @@ namespace HizbeJamali.ZaereenDataImportApp
             return null;
         }
 
+        public int GetLastAccountNumber(string dbPath)
+        {
+            int account_number = 0;
+            using (OleDbConnection connection = new OleDbConnection(string.Format(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};", dbPath)))
+            {
+                OleDbCommand command = new OleDbCommand("select top 1 Account_No from ZaereenLedger order by account_no desc", connection);
+                command.CommandType = CommandType.Text;
+                connection.Open();
+                account_number = Convert.ToInt32(command.ExecuteScalar());
+                connection.Close();
+            }
+            return account_number;
+        }
+
         private void PushDataToAccessDatabase(string dbPath, DataTable dataToInsert)
         {
             using (OleDbConnection connection = new OleDbConnection(string.Format(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};", dbPath)))
             {
+                int count = 1;
                 foreach(DataRow row in dataToInsert.Rows)
                 {
-                    string insertQuery = string.Format("insert into zaereenledger (Zaereen_Name, Age, Ejamaat, Mobile, Occupation, Address, TripExp, Remarks) values ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}')",
-                        row["Name"], row["Age"], row["ITS"], row["Mobile"], row["Occupation"], row["Location"], row["TripExp"], row["Remarks"]);
+                    count++;
+                    string insertQuery = string.Format("insert into zaereenledger (Account_No, Zaereen_Name, Age, Ejamaat, Mobile, Occupation, Address, TripExp, Remarks) values ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', {6}, '{7}', '{8}')",
+                        GetLastAccountNumber(dbPath) + count, row["Name"], row["Age"], row["ITS"], row["Mobile"], row["Occupation"], row["Location"], row["TripExp"], row["Remarks"]);
 
                     OleDbCommand command = new OleDbCommand(insertQuery, connection);
                     command.CommandType = CommandType.Text;
